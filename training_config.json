@@ -1,0 +1,46 @@
+{
+  "project_name": "khmer_tts_finetune",
+  "push_to_hub": true,
+  "hub_model_id": "phonsobon/khmer-tts-finetuned",
+  "overwrite_output_dir": false,
+  "output_dir": "./khmer_tts_finetuned",
+
+  "model_name_or_path": "phonsobon/mms-tts-khm-train-ready",
+
+  "dataset_name": "phonsobon/khmer-tts-training-data",
+  "audio_column_name": "audio",
+  "text_column_name": "text",
+  "train_split_name": "train",
+  "eval_split_name": "validation",
+
+  "speaker_id_column_name": "speaker_id",
+  "override_speaker_embeddings": true,
+  "filter_on_speaker_id": null,
+
+  "full_generation_sample_text": "សួស្តីអ្នកទាំងអស់គ្នា",
+
+  "max_duration_in_seconds": 15,
+  "min_duration_in_seconds": 0.5,
+
+  "learning_rate": 2e-5,
+  "per_device_train_batch_size": 8,
+  "per_device_eval_batch_size": 8,
+  "gradient_accumulation_steps": 4,
+  "num_train_epochs": 20,
+  "mixed_precision": "fp16",
+
+  "weight_duration": 1.0,
+  "weight_kl": 1.5,
+  "weight_mel": 35.0,
+  "weight_disc": 3.0,
+  "weight_gen": 1.0,
+  "weight_fmaps": 1.0,
+
+  "checkpointing_steps": 500,
+  "logging_steps": 50,
+  "eval_steps": 500,
+
+  "seed": 42,
+  "preprocessing_num_workers": 2,
+  "dataloader_num_workers": 2
+}
