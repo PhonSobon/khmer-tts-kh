@@ -78,10 +78,19 @@ def inspect_one(name):
     for row in ds.take(SAMPLE_SIZE):
         n += 1
         if audio_col and row.get(audio_col) is not None:
-            arr = row[audio_col].get("array")
-            sr = row[audio_col].get("sampling_rate")
+            audio_val = row[audio_col]
+            if isinstance(audio_val, dict):
+                arr = audio_val.get("array")
+                sr = audio_val.get("sampling_rate")
+            else:
+                # Newer `datasets` versions decode audio into an
+                # AudioDecoder object instead of a plain dict.
+                samples = audio_val.get_all_samples()
+                arr = samples.data
+                sr = samples.sample_rate
             if arr is not None and sr:
-                durations.append(len(arr) / sr)
+                num_samples = arr.shape[-1] if hasattr(arr, "shape") else len(arr)
+                durations.append(num_samples / sr)
         if text_col and row.get(text_col):
             t = str(row[text_col])
             text_lens.append(len(t))
